@@ -1,0 +1,62 @@
+{% extends 'store/base.html' %}
+
+{% block title %}Order Placed Successfully{% endblock %}
+
+{% block content %}
+<section class="success-section">
+    <div class="container">
+        <div class="success-container">
+
+            <!-- SUCCESS ICON -->
+            <div class="success-icon">✅</div>
+
+            <h2>Order Placed Successfully!</h2>
+            <p class="success-message">
+                Thank you for shopping with ShopEase! 🎉
+            </p>
+
+            <!-- ORDER DETAILS -->
+            <div class="success-details">
+                <div class="success-row">
+                    <span>Order ID:</span>
+                    <span><strong>#{{ order.id }}</strong></span>
+                </div>
+                <div class="success-row">
+                    <span>Order Date:</span>
+                    <span>{{ order.order_date|date:"d M Y, h:i A" }}</span>
+                </div>
+                <div class="success-row">
+                    <span>Total Amount:</span>
+                    <span><strong>₹{{ order.total_amount }}</strong></span>
+                </div>
+                <div class="success-row">
+                    <span>Status:</span>
+                    <span class="status-badge pending">{{ order.status }}</span>
+                </div>
+                <div class="success-row">
+                    <span>Delivery To:</span>
+                    <span>{{ order.full_name }}, {{ order.city }}, {{ order.state }}</span>
+                </div>
+                <div class="success-row">
+                    <span>Payment:</span>
+                    <span>💵 Cash on Delivery</span>
+                </div>
+            </div>
+
+            <!-- ACTION BUTTONS -->
+            <div class="success-buttons">
+                <a href="{% url 'order_detail' order.pk %}" class="btn-primary">
+                    Track Order 📦
+                </a>
+                <a href="{% url 'order_list' %}" class="btn-secondary">
+                    My Orders
+                </a>
+                <a href="{% url 'product_list' %}" class="btn-continue">
+                    Continue Shopping →
+                </a>
+            </div>
+
+        </div>
+    </div>
+</section>
+{% endblock %}

@@ -1,0 +1,54 @@
+{% extends 'store/base.html' %}
+
+{% block title %}{{ product.name }}{% endblock %}
+
+{% block content %}
+<section class="product-detail-section">
+    <div class="container">
+        <div class="product-detail-grid">
+
+            <!-- PRODUCT IMAGE -->
+            <div class="product-detail-image">
+                {% if product.image %}
+                    <img src="{{ product.image.url }}" alt="{{ product.name }}">
+                {% else %}
+                    <div class="no-image-large">📦 No Image Available</div>
+                {% endif %}
+            </div>
+
+            <!-- PRODUCT INFO -->
+            <div class="product-detail-info">
+                <h1>{{ product.name }}</h1>
+                <p class="detail-category">Category: <strong>{{ product.category.name }}</strong></p>
+                <p class="detail-price">₹{{ product.price }}</p>
+                <p class="detail-description">{{ product.description }}</p>
+
+                <p class="detail-stock">
+                    {% if product.stock > 0 %}
+                        ✅ In Stock <span>({{ product.stock }} items available)</span>
+                    {% else %}
+                        ❌ Out of Stock
+                    {% endif %}
+                </p>
+
+                <div class="detail-buttons">
+                    {% if user.is_authenticated %}
+                        {% if product.stock > 0 %}
+                            <a href="{% url 'add_to_cart' product.pk %}" class="btn-cart">
+                                🛒 Add to Cart
+                            </a>
+                        {% else %}
+                            <button class="btn-disabled" disabled>Out of Stock</button>
+                        {% endif %}
+                    {% else %}
+                        <a href="{% url 'login' %}" class="btn-cart">Login to Buy</a>
+                    {% endif %}
+
+                    <a href="{% url 'product_list' %}" class="btn-back">← Back to Products</a>
+                </div>
+            </div>
+
+        </div>
+    </div>
+</section>
+{% endblock %}

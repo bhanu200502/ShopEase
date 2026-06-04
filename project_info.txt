@@ -1,0 +1,19 @@
+PROJECT: ShopEase E-Commerce Application
+DEVELOPER: Your Name
+TECHNOLOGY: Django + Python + SQLite
+VERSION: 1.0.0
+
+HOW TO RUN:
+1. cd D:\ShopEase
+2. venv\Scripts\activate
+3. python manage.py runserver
+4. Open http://127.0.0.1:8000/
+
+ADMIN LOGIN:
+URL: http://127.0.0.1:8000/admin/
+Username: admin
+Password: admin123
+
+TEST USER:
+Username: testuser
+Password: test1234

@@ -1,0 +1,118 @@
+{% extends 'store/base.html' %}
+
+{% block title %}Order #{{ order.id }} Details{% endblock %}
+
+{% block content %}
+<section class="order-detail-section">
+    <div class="container">
+        <h2 class="section-title">📦 Order #{{ order.id }} Details</h2>
+
+        <div class="order-detail-container">
+
+            <!-- ORDER TRACKING -->
+            <div class="tracking-section">
+                <h3>Order Tracking</h3>
+                <div class="tracking-steps">
+
+                    <div class="tracking-step
+                        {% if order.status == 'Pending' or order.status == 'Processing' or order.status == 'Shipped' or order.status == 'Delivered' %}active{% endif %}">
+                        <div class="step-icon">📋</div>
+                        <div class="step-label">Pending</div>
+                    </div>
+
+                    <div class="tracking-line
+                        {% if order.status == 'Processing' or order.status == 'Shipped' or order.status == 'Delivered' %}active{% endif %}">
+                    </div>
+
+                    <div class="tracking-step
+                        {% if order.status == 'Processing' or order.status == 'Shipped' or order.status == 'Delivered' %}active{% endif %}">
+                        <div class="step-icon">⚙️</div>
+                        <div class="step-label">Processing</div>
+                    </div>
+
+                    <div class="tracking-line
+                        {% if order.status == 'Shipped' or order.status == 'Delivered' %}active{% endif %}">
+                    </div>
+
+                    <div class="tracking-step
+                        {% if order.status == 'Shipped' or order.status == 'Delivered' %}active{% endif %}">
+                        <div class="step-icon">🚚</div>
+                        <div class="step-label">Shipped</div>
+                    </div>
+
+                    <div class="tracking-line
+                        {% if order.status == 'Delivered' %}active{% endif %}">
+                    </div>
+
+                    <div class="tracking-step
+                        {% if order.status == 'Delivered' %}active{% endif %}">
+                        <div class="step-icon">✅</div>
+                        <div class="step-label">Delivered</div>
+                    </div>
+
+                </div>
+            </div>
+
+            <!-- ORDER INFO -->
+            <div class="order-detail-grid">
+
+                <!-- DELIVERY INFO -->
+                <div class="delivery-info">
+                    <h3>Delivery Information</h3>
+                    <p><strong>Name:</strong> {{ order.full_name }}</p>
+                    <p><strong>Phone:</strong> {{ order.phone }}</p>
+                    <p><strong>Address:</strong> {{ order.address }}</p>
+                    <p><strong>City:</strong> {{ order.city }}</p>
+                    <p><strong>State:</strong> {{ order.state }}</p>
+                    <p><strong>Pincode:</strong> {{ order.pincode }}</p>
+                    <p><strong>Payment:</strong> 💵 Cash on Delivery</p>
+                </div>
+
+                <!-- ORDER SUMMARY -->
+                <div class="order-summary-detail">
+                    <h3>Order Summary</h3>
+                    {% for item in order_items %}
+                    <div class="order-summary-item">
+                        <div class="item-image">
+                            {% if item.product.image %}
+                                <img src="{{ item.product.image.url }}"
+                                    alt="{{ item.product.name }}">
+                            {% else %}
+                                <div class="no-image-small">📦</div>
+                            {% endif %}
+                        </div>
+                        <div class="item-details">
+                            <p><strong>{{ item.product.name }}</strong></p>
+                            <p>Qty: {{ item.quantity }}</p>
+                            <p>Price: ₹{{ item.price }}</p>
+                        </div>
+                        <div class="item-subtotal">
+                            <p>₹{{ item.get_subtotal }}</p>
+                        </div>
+                    </div>
+                    {% endfor %}
+
+                    <div class="order-total-section">
+                        <div class="total-row">
+                            <span>Total Amount:</span>
+                            <span><strong>₹{{ order.total_amount }}</strong></span>
+                        </div>
+                    </div>
+                </div>
+
+            </div>
+
+            <!-- BACK BUTTONS -->
+            <div class="detail-back-buttons">
+                <a href="{% url 'order_list' %}" class="btn-back">
+                    ← Back to Orders
+                </a>
+                <a href="{% url 'product_list' %}" class="btn-continue">
+                    Continue Shopping →
+                </a>
+            </div>
+
+        </div>
+    </div>
+</section>
+{% endblock %}
